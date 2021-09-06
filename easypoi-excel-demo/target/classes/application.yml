@@ -1,0 +1,49 @@
+# 服务端口
+server:
+  port: 8083
+
+# 数据源配置
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://localhost:3306/db_test?&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSl=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    ## 配置连接池信息
+    ## 初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 30
+    ## 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+    # 超过时间限制是否回收
+    removeAbandoned: true
+    # 超时时间；单位为秒。180秒=3分钟
+    removeAbandonedTimeout: 180
+    # 关闭abanded连接时输出错误日志
+    logAbandoned: true
+
+# mybatis-plus 默认扫描mapper.xml的目录
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  #配置sql打印日志
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

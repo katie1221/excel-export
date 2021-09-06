@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.easypoiexceldemo.dao.ProductDao">
+
+    <!--获取商品列表-->
+    <select id="getProductListByPage" resultType="java.util.HashMap">
+        select product_id,title,sub_title,sale_price
+        from t_product
+        where 1=1
+        <if test="product.title!=null and ''!=product.title">
+            and title like concat('%',#{product.title},'%')
+        </if>
+        <if test="product.sub_title!=null and ''!=product.sub_title">
+            and sub_title like concat('%',#{product.sub_title},'%')
+        </if>
+        order by create_time desc
+    </select>
+</mapper>
